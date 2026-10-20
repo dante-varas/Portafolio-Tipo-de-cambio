@@ -80,6 +80,11 @@ Opcionalmente se puede indicar una fecha de corte con el parámetro `-hasta`. Si
 ```
 python -c "import sqlite3; c=sqlite3.connect('coyuntura.db'); c.executescript(open('sql/consolidacion.sql',encoding='utf-8').read()); c.commit()"
 ```
+### 7. Ejecutar el análisis y generar los gráficos
+
+python src/analisis_coyuntura.py
+
+Los gráficos se guardan en la carpeta `figuras`.
 
 ---
 
