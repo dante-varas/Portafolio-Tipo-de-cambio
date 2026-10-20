@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-conn = sqlite3.connect("data/coyuntura.db")
+conn = sqlite3.connect("coyuntura.db")
 
 # ---------- 1. Datos desde la vista ----------
 datos_sql = pd.read_sql_query(
