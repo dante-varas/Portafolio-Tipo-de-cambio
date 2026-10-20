@@ -7,7 +7,7 @@ import requests
 from dotenv import load_dotenv
 from config import SERIES_BCCH, SERIES_FRED
 
-# Cargar las credenciales desde el archivo .env
+# Cargar credencales privadas de .env
 load_dotenv()
 
 USER_BCCH = os.getenv("USER_BCCH")
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     
     lista_obs = []
 
-    # 1. Extraccion Banco Central
+    # Extraccion BCCH
     for codigo, nombre in SERIES_BCCH.items():
         df_temp = get_bcch_data(codigo, USER_BCCH, PASS_BCCH, "2013-01-01")
         if not df_temp.empty:
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         else:
             print(f"[ERROR] Serie BCCH: {nombre}")
 
-    # 2. Extraccion FRED
+    # Extraccion FRED
     for codigo, nombre in SERIES_FRED.items():
         try:
             df_temp = web.DataReader(codigo, "fred", start_date_fred, end_date_fred)
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         except Exception:
             print(f"[ERROR] Serie FRED: {nombre}")
 
-    # 3. Concatenar y mostrar resultado
+    #Concatenando y mostrando el resultado
     if len(lista_obs) > 0:
         df_obs = pd.concat(lista_obs, ignore_index=True).dropna()
         print(f"\nExtraccion terminada. Total registros: {len(df_obs)}")
