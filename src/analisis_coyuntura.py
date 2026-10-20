@@ -1,5 +1,5 @@
 # ==========================================
-# src/analisis_coyuntura.py  -  Parte de Mica
+# src/analisis_coyuntura.py 
 # Análisis de coyuntura inicial (Hito 2)
 # ==========================================
 import sqlite3
@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-conn = sqlite3.connect("coyuntura.db")
+conn = sqlite3.connect("data/coyuntura.db")
 
 # ---------- 1. Datos desde la vista ----------
 datos_sql = pd.read_sql_query(
@@ -27,14 +27,15 @@ niveles["Diferencial_Tasas"] = niveles["TPM"] - niveles["Tasa_FED_EEUU"]
 # ---------- Gráfico 1: Tipo de cambio vs cobre ----------
 fig, ax1 = plt.subplots(figsize=(10, 5))
 ax1.plot(niveles.index, niveles["Tipo_Cambio"], color="blue", label="Tipo de cambio")
-ax1.set_ylabel("CLP / USD", color="blue")
+ax1.set_ylabel("Pesos por dólar (CLP / USD)", color="blue")
 ax2 = ax1.twinx()
 ax2.plot(niveles.index, niveles["Precio_cobre"], color="orange", linestyle="--", label="Cobre")
 ax2.set_ylabel("Cobre (USD/lb)", color="orange")
-plt.title("Tipo de cambio vs precio del cobre")
+plt.title("Tipo de cambio vs precio del cobre\n(Frecuencia mensual, 2013 -- 2026)", fontsize=11, fontweight="bold")
 ax1.grid(True, alpha=0.3)
+fig.text(0.01, 0.01, "Fuente: Elaboración propia a partir de datos del BCCh y FRED.", fontsize=8, style="italic")
 plt.tight_layout()
-plt.savefig("tc_cobre.png", dpi=200)
+plt.savefig("figuras/tc_cobre.png", dpi=200, bbox_inches="tight") 
 plt.show()
 
 # ---------- Gráfico 2: Matriz de correlaciones ----------
@@ -43,11 +44,11 @@ matriz = niveles[variables].corr()
 
 plt.figure(figsize=(7, 5))
 sns.heatmap(matriz, annot=True, cmap="coolwarm", fmt=".2f", vmin=-1, vmax=1)
-plt.title("Correlación entre tipo de cambio y variables clave")
+plt.title("Matriz de correlación entre variables clave\n(Niveles mensuales, 2013 -- 2026)", fontsize=11, fontweight="bold")
+plt.figtext(0.01, 0.01, "Fuente: Elaboración propia a partir de datos del BCCh y FRED.", fontsize=8, style="italic")
 plt.tight_layout()
-plt.savefig("correlaciones.png", dpi=200)
+plt.savefig("figuras/correlaciones.png", dpi=200, bbox_inches="tight")
 plt.show()
-
 # ---------- Gráfico 3: Tipo de cambio en nivel y variación interanual ----------
 desde = "2022-01-01"   # últimos años, para que se vea la coyuntura
 tc   = niveles.loc[desde:, "Tipo_Cambio"]
@@ -60,17 +61,17 @@ a1.plot(tc3.index, tc3, color="gray", linestyle="--", label="Promedio móvil 3 m
 a1.set_ylabel("CLP / USD")
 a1.legend()
 a1.grid(True, alpha=0.3)
-a1.set_title("Tipo de cambio: nivel y variación interanual")
+a1.set_title("Tipo de cambio: nivel y variación interanual (2022 -- 2026)", fontsize=11, fontweight="bold")
 
 colores = ["red" if v > 0 else "green" for v in tcia.fillna(0)]
 a2.bar(tcia.index, tcia, width=20, color=colores)
 a2.axhline(0, color="black", linewidth=0.8)
 a2.set_ylabel("Var. interanual (%)")
 a2.grid(True, alpha=0.3)
+fig.text(0.01, 0.01, "Fuente: Elaboración propia a partir de datos del BCCh.", fontsize=8, style="italic")
 plt.tight_layout()
-plt.savefig("tc_nivel_variacion.png", dpi=200)
+plt.savefig("figuras/tc_nivel_variacion.png", dpi=200, bbox_inches="tight")
 plt.show()
-
 # ---------- Gráfico 4: Indicadores de contexto ----------
 fig, ejes = plt.subplots(2, 2, figsize=(10, 6), sharex=True)
 paneles = [
@@ -83,10 +84,12 @@ for ax, (serie, tabla, titulo) in zip(ejes.flat, paneles):
     datos = tabla.loc[desde:, serie]
     ax.plot(datos.index, datos, color="teal")
     ax.axhline(0, color="black", linewidth=0.6)
-    ax.set_title(titulo, fontsize=10)
+    ax.set_title(titulo, fontsize=10, fontweight="bold")
     ax.grid(True, alpha=0.3)
+
+fig.text(0.01, 0.01, "Fuente: Elaboración propia a partir de datos del BCCh y FRED.", fontsize=8, style="italic")
 plt.tight_layout()
-plt.savefig("contexto.png", dpi=200)
+plt.savefig("figuras/contexto.png", dpi=200, bbox_inches="tight")
 plt.show()
 
 # ---------- Números para el informe ----------
