@@ -1,6 +1,6 @@
-# sql/consultas.sql
-# Consultas SQL para el análisis de coyuntura
- Llevar todas las series a frecuencia mensual promedio
+-- sql/consultas.sql
+-- Consultas SQL para el análisis de coyuntura
+--Llevar todas las series a frecuencia mensual promedio
 WITH mensual AS (
     SELECT o.id_serie,
            strftime('%Y-%m', o.fecha) AS mes,
@@ -9,7 +9,7 @@ WITH mensual AS (
     GROUP BY o.id_serie, mes
 )
 
-# Uniendo tablas y calcular variación interanual (12 meses)
+-- Uniendo tablas y calcular variación interanual (12 meses)
 SELECT s.nombre,
        t.tema,
        m.mes,

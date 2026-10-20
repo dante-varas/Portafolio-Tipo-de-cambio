@@ -1,4 +1,4 @@
-#corroborando
+--corroborando
 
 SELECT t.tema,
        s.nombre,
