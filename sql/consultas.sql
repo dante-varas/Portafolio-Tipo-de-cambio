@@ -1,7 +1,7 @@
 -- sql/consultas.sql
 -- Consultas SQL para el análisis de coyuntura
 --Llevar todas las series a frecuencia mensual promedio
-DROP VIEW IF EXISTS v_variacion_12m
+DROP VIEW IF EXISTS v_variacion_12m;
 CREATE VIEW v_variacion_12m AS
 WITH mensual AS (
     SELECT o.id_serie,
