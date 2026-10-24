@@ -1,6 +1,8 @@
 -- sql/consultas.sql
 -- Consultas SQL para el análisis de coyuntura
 --Llevar todas las series a frecuencia mensual promedio
+DROP VIEW IF EXISTS v_variacion_12m
+CREATE VIEW v_variacion_12m AS
 WITH mensual AS (
     SELECT o.id_serie,
            strftime('%Y-%m', o.fecha) AS mes,
@@ -22,3 +24,16 @@ FROM mensual AS m
 JOIN series AS s ON s.id_serie = m.id_serie
 JOIN temas AS t ON t.id_tema = s.id_tema
 ORDER BY s.nombre, m.mes;
+
+-- Resumen por serie: cantidad de datos, fechas y promedio
+SELECT t.tema,
+       s.nombre,
+       COUNT(o.valor) AS n_obs,
+       MIN(o.fecha)   AS fecha_inicio,
+       MAX(o.fecha)   AS fecha_fin,
+       AVG(o.valor)   AS promedio
+FROM observaciones AS o
+JOIN series AS s ON s.id_serie = o.id_serie
+JOIN temas  AS t ON t.id_tema  = s.id_tema
+GROUP BY t.tema, s.nombre
+ORDER BY t.tema, s.nombre;
