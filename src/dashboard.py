@@ -68,22 +68,22 @@ else:
     h = np.arange(1, 7)
     pred_fut = np.repeat(ultimo_valor, 6)
 
-df_eval = pd.DataFrame({
-        'pred_modelo': pred_ingenuo_eval,
-        'pred_ingenuo': pred_ingenuo_eval,
-        'ic_inf': pred_ingenuo_eval - 1.96 * sigma_mensual,
-        'ic_sup': pred_ingenuo_eval + 1.96 * sigma_mensual
-    }, index=fechas_eval)
+    df_eval = pd.DataFrame({
+            'pred_modelo': pred_ingenuo_eval,
+            'pred_ingenuo': pred_ingenuo_eval,
+            'ic_inf': pred_ingenuo_eval - 1.96 * sigma_mensual,
+            'ic_sup': pred_ingenuo_eval + 1.96 * sigma_mensual
+            }, index=fechas_eval)
 
-df_fut = pd.DataFrame({
-        'pred_modelo': pred_fut,
-        'pred_ingenuo': pred_fut,
-        'ic_inf': pred_fut - 1.96 * sigma_mensual * np.sqrt(h),
-        'ic_sup': pred_fut + 1.96 * sigma_mensual * np.sqrt(h)
-    }, index=fechas_fut)
+    df_fut = pd.DataFrame({
+            'pred_modelo': pred_fut,
+            'pred_ingenuo': pred_fut,
+            'ic_inf': pred_fut - 1.96 * sigma_mensual * np.sqrt(h),
+            'ic_sup': pred_fut + 1.96 * sigma_mensual * np.sqrt(h)
+            }, index=fechas_fut)
 
-df_pron = pd.concat([df_eval, df_fut])
-subtitulo_pron = "Proyección preliminar Benchmark ingenuo ± IC 95%"
+    df_pron = pd.concat([df_eval, df_fut])
+    subtitulo_pron = "Proyección preliminar Benchmark ingenuo ± IC 95%"
 
 #CONSTRUIMOS AHORA EL DASHBOARD CON 3 PANELES VERTICALES.
 
@@ -130,7 +130,7 @@ axes[2].fill_between(df_pron.index, df_pron['ic_inf'], df_pron['ic_sup'],
                      color=COLOR_ALT, alpha=0.15, label='Intervalo de confianza 95%')
 axes[2].axvline(ultimo_fecha, color=COLOR_GRAY, ls='-.', lw=1)
 
-axes[2].set_title(f'3. Pronóstico Fuera de Muestra y Proyección a 6 Meses — {subtitulo_pron}',
+axes[2].set_title(f'3. Random Forest vs. Benchmark ingenuo',
                   fontweight='bold', loc='left', pad=8)
 axes[2].set_ylabel('CLP por USD')
 axes[2].legend(loc='upper left', ncol=2, fontsize=8.5)
