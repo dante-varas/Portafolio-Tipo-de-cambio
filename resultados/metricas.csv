@@ -1,0 +1,7 @@
+Modelo,RMSE,MAE,R2 OOS (%)
+Ingenuo,3.061,2.445,0.0
+AR(1),3.063,2.44,-0.148
+Ridge,3.045,2.44,1.021
+Lasso,3.063,2.455,-0.15
+Random Forest,2.917,2.288,9.199
+Gradient Boosting,2.965,2.316,6.176

@@ -1,7 +1,13 @@
+# ==========================================
 # src/config.py
+# Catálogo centralizado de series del BCCh y FRED
+# ==========================================
+# Centralizamos aquí los códigos oficiales y nombres canónicos para evitar repetir
+# identificadores en distintos scripts y facilitar la trazabilidad con las APIs.
+
 SERIES_BCCH = {
     "F073.TCO.PRE.HIST.M": "Tipo_Cambio",
-    "F022.TPM.TIN.D001.NO.Z.M": "TPM",
+    "F022.TPM.TIN.D001.NO.Z.D": "TPM",
     "F074.IPC.IND.Z.EP09.C.M": "IPC",
     "F032.IMC.IND.Z.Z.EP18.Z.Z.0.M": "IMACEC",
     "F019.PPB.PRE.40.M": "Precio_cobre",
@@ -21,7 +27,7 @@ SERIES_FRED = {
 # Descripción: Precio del dólar observado en pesos chilenos (USD/CLP).
 # Razón económica: Variable principal a explicar; refleja el equilibrio de divisas local e internacional.
 
-# 2. TPM (F022.TPM.TIN.D001.NO.Z.M)
+# 2. TPM (F022.TPM.TIN.D001.NO.Z.D)
 # Descripción: Tasa de interés de referencia del Banco Central de Chile.
 # Razón económica: Si sube, atrae capitales a Chile, aprecia el peso y hace bajar el dólar.
 
